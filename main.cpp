@@ -15,23 +15,25 @@ void printLine(std::string txt, bool doubleEnd=false) {
 	}
 }
 void setup() {
-	Pump p1(1, "Vega A", 1);
+
+	Pump p1(1, "Demo 1", 1);
 	controller.addPump(p1);
-	Pump p2(2, "Vega B", 2);
+	Pump p2(2, "Demo 2", 2);
 	controller.addPump(p2);
-	Pump p3(3, "Flores A", 4);
+	Pump p3(3, "Demo 3", 4);
 	controller.addPump(p3);
-	Pump p4(4, "Flores B", 8);
+	Pump p4(4, "Demo 4", 8);
 	controller.addPump(p4);
-	Pump p5(5, "Rhizotonic", 16);
+	Pump p5(5, "Demo 5", 16);
 	controller.addPump(p5);
-	Pump p6(6, "CannaZym", 32);
+	Pump p6(6, "Demo 6", 32);
 	controller.addPump(p6);
-	Pump p7(7, "Boost", 64);
+	Pump p7(7, "Demo 7", 64);
 	controller.addPump(p7);
-	Pump p8(8, "PH-", 128);
+	Pump p8(8, "Demo 8", 128);
 	controller.addPump(p8);
 	controller.setup();
+
 }
 
 void startCalibrationProcess(int argc, char **args) {
@@ -44,14 +46,6 @@ void startCalibrationProcess(int argc, char **args) {
 		std::string input = "";
 		std::cin >> input;
 		printLine(input);
-		// if(input == "start") {
-		// 	p.start();
-		// } else if(input == "stop") {
-		// 	p.stop();
-		// } else {
-
-		// 	printLine("Invalid argument detected. Stopping calibration.");
-		// }
 	} else {
 		printLine("Invalid argument count detected!");
 		printLine("");

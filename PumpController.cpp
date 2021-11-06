@@ -31,27 +31,36 @@ bool PumpController::IsAlive() {
 }
 
 bool PumpController::DumpSnapShot() {
-	std::string pumpCsv = "";
-	std::string presetCsv = "";
-	int index =0;
-	for(index = 0; index <= sizeof(this->pumps)/sizeof(this->pumps[0])-1; index++) {
-		Pump p = this->pumps[index];
-		if(p.name != "__UNDEFINED__") {
-			pumpCsv = pumpCsv + p.name + "|" + (p.calibrated == true ? "y" : "n")+ "|"+ std::to_string(p.timeToDose100Ml) + std::string("\n");
+	try {
+		std::string pumpCsv = "name|calibrated|timetodose100ml|pumpNr\n";
+		std::string presetCsv = "name|ml|pumpNr|description\n";
+		int index =0;
+		for(index = 0; index < this->pumps.size(); index++) {
+			Pump p = this->pumps[index];
+			if(p.name != "__UNDEFINED__") {
+				pumpCsv = pumpCsv + p.name + "|" + (p.calibrated == true ? "y" : "n")+ "|"+ std::to_string(p.timeToDose100Ml) + "|" + std::to_string(p.pumpNr) + std::string("\n");
+			}
 		}
-	}
-	FILE * pFile;
-	pFile = fopen ("pumps.txt", "wb");
-	fwrite (pumpCsv.c_str() , sizeof(std::string), sizeof(pumpCsv), pFile);
-	fclose (pFile);
+		index =0;
+		for(index = 0; index < this->presets.capacity(); index++) {
+			Preset p = this->presets[index];
+			if(p.name != "__UNDEFINED__") {
+				presetCsv = presetCsv + p.name + "|" + std::to_string(p.ml) + "|"+ std::to_string(p.pumpNr) + "|" + p.description + std::string("\n");
+			}
+		}
+		std::ofstream out("pumps.csv");
+		out << pumpCsv;
+		out.close();
 
-	FILE * pFile1;
-	pFile1 = fopen ("presets.data", "wb");
-	fwrite (presetCsv.c_str() , sizeof(std::string), sizeof(presetCsv), pFile);
-	fclose (pFile1);
-	
-	return false;
+		std::ofstream out2("presets.csv");
+		out2 << presetCsv;
+		out2.close();
+		return true;
+	} catch(...) {
+		return false;
+	}
 }
+
 bool PumpController::ParseSnapShot() {
 	return false;
 }
