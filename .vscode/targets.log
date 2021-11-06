@@ -1,0 +1,325 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'main.o', needed by 'all'.  Stop.
+ 
+# GNU Make 4.3
+# Built for Windows32
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Sat Nov 06 08:54:40 2021
+
+# Variables
+
+# environment
+SYSTEMDRIVE = C:
+# environment
+LC_ALL = C
+# environment
+USERPROFILE = C:\Users\Wesley van der Meer
+# environment
+LOCALAPPDATA = C:\Users\Wesley van der Meer\AppData\Local
+# environment
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-13e0a471-b0d7-422b-b1dd-4d93d2e31b1a-sock
+# environment
+VSCODE_CWD = C:\Users\Wesley van der Meer\AppData\Local\Programs\Microsoft VS Code
+# environment
+CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
+# environment
+SYSTEMROOT = C:\Windows
+# environment
+PROCESSOR_LEVEL = 6
+# environment
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules
+# default
+MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
+# automatic
+@D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
+# environment
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_27488_YKVOJBTMKLJGEHQS
+# environment
+ONEDRIVECOMMERCIAL = C:\Users\Wesley van der Meer\Warmteinfra
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# automatic
+%D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
+# automatic
+^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
+# environment
+VSCODE_LOG_STACK = false
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = C:\Users\Wesley van der Meer\AppData\Roaming\Code\CachedData\b3318bc0524af3d74034b8bb8a64df0ccf35549a
+# environment
+LANG = C
+# default
+.LOADED := 
+# environment
+TMP = C:\Users\WESLEY~1\AppData\Local\Temp
+# default
+.INCLUDE_DIRS = .
+# environment
+PROCESSOR_ARCHITEW6432 = AMD64
+# makefile
+MAKEFLAGS = pqrR
+# environment
+ONEDRIVE = C:\Users\Wesley van der Meer\Warmteinfra
+# makefile
+CURDIR := c:/Projects/DosingPumpController
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# automatic
+*D = $(patsubst %/,%,$(patsubst %\,%,$(dir $*)))
+# environment
+PROGRAMFILES = C:\Program Files (x86)
+# environment
+MFLAGS = -pqrR
+# default
+.SHELLFLAGS := -c
+# environment
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# automatic
++D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
+# makefile (from 'makefile', line 1)
+MAKEFILE_LIST := makefile
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_PID = 27488
+# automatic
+?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
+# makefile (from 'makefile', line 6)
+FLAGS = -g -c -Wall
+# automatic
+*F = $(notdir $*)
+# automatic
+<D = $(patsubst %/,%,$(patsubst %\,%,$(dir $<)))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+ONEDRIVECONSUMER = C:\Users\Wesley van der Meer\OneDrive
+# default
+MAKE_HOST := Windows32
+# makefile (from 'makefile', line 1)
+OBJS = main.o CalibrationResult.o Preset.o PresetLoader.o Pump.o PumpController.o
+# environment
+PROGRAMDATA = C:\ProgramData
+# default
+SHELL := sh.exe
+# environment
+HOMEPATH = \Users\Wesley van der Meer
+# default
+MAKECMDGOALS := all
+# environment
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# environment
+COMSPEC = C:\Windows\system32\cmd.exe
+# environment
+WINDIR = C:\Windows
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\dotnet\;C:\ProgramData\chocolatey\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\WireGuard\;C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\python.exe;C:\Program Files\PuTTY\;C:\msys64\mingw64\bin;C:\Users\Wesley van der Meer\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2020.3.2\bin;;C:\Users\Wesley van der Meer\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Wesley van der Meer\AppData\Roaming\npm;C:\Users\Wesley van der Meer\.dotnet\tools;C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\python.exe;
+# environment
+ZES_ENABLE_SYSMAN = 1
+# environment
+COMPUTERNAME = DESKTOP-S86AJHH
+# default
+MAKEFILES := 
+# automatic
+^F = $(notdir $^)
+# makefile (from 'makefile', line 3)
+HEADER = CalibrationResult.h Preset.h PresetLoader.h Pump.h PumpController.h
+# environment
+PROMPT = $P$G
+# environment
+CHOCOLATEYLASTPATHUPDATE = 132713254888222574
+# environment
+INTELLIJ IDEA = C:\Program Files\JetBrains\IntelliJ IDEA 2020.3.2\bin;
+# environment
+LOGONSERVER = \\DESKTOP-S86AJHH
+# environment
+VSCODE_LOG_NATIVE = false
+# environment
+USERNAME = Wesley van der Meer
+# environment
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# automatic
+?F = $(notdir $?)
+# environment
+PROGRAMW6432 = C:\Program Files
+# environment
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# automatic
++F = $(notdir $+)
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+USERDOMAIN = DESKTOP-S86AJHH
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+OS = Windows_NT
+# makefile
+.DEFAULT_GOAL := all
+# makefile (from 'makefile', line 2)
+SOURCE = main.cpp CalibrationResult.cpp Preset.cpp PresetLoader.cpp Pump.cpp PumpController.cpp
+# default
+MAKE_VERSION := 4.3
+# environment
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# environment
+USERDOMAIN_ROAMINGPROFILE = DESKTOP-S86AJHH
+# environment
+NUMBER_OF_PROCESSORS = 12
+# environment
+PUBLIC = C:\Users\Public
+# environment
+APPDATA = C:\Users\Wesley van der Meer\AppData\Roaming
+# environment
+HOMEDRIVE = C:
+# environment
+PROCESSOR_ARCHITECTURE = x86
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
+# environment
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+TEMP = C:\Users\WESLEY~1\AppData\Local\Temp
+# environment
+VSCODE_IPC_HOOK = \\.\pipe\0403078751ae402688f6e08174c644c1-1.62.0-main-sock
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# makefile (from 'makefile', line 4)
+OUT = dosingpump.exe
+# default
+SUFFIXES := 
+# environment
+ALLUSERSPROFILE = C:\ProgramData
+# environment
+SESSIONNAME = Console
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
+# environment
+PROCESSOR_REVISION = a502
+# makefile (from 'makefile', line 5)
+CC = g++
+# makefile (from 'makefile', line 7)
+LFLAGS = 
+# environment
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
+# variable set hash-table stats:
+# Load=105/1024=10%, Rehash=0, Collisions=11/133=8%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (key c:/Projects/DosingPumpController, mtime 1636184616): 20 files, no impossibilities.
+
+# 20 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+PresetLoader.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Preset.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Pump.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+PumpController.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 13):
+	rm -f $(OBJS) $(OUT)
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: main.o CalibrationResult.o Preset.o PresetLoader.o Pump.o PumpController.o
+#  Command line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 10):
+	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
+
+# Not a target:
+CalibrationResult.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+main.o:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  Last modified 2021-11-01 15:22:57
+#  File has been updated.
+#  Successfully updated.
+
+# files hash-table stats:
+# Load=11/1024=1%, Rehash=0, Collisions=0/28=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 30 / storage = 305 B / avg = 10 B
+# current buf: size = 8174 B / used = 305 B / count = 30 / avg = 10 B
+
+# strcache performance: lookups = 37 / hit rate = 18%
+# hash-table stats:
+# Load=30/8192=0%, Rehash=0, Collision 
+s=0/37=0%
+# Finished Make data base on Sat Nov 06 08:54:40 2021
+
+ 

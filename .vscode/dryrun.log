@@ -1,0 +1,11 @@
+make.exe all --dry-run --always-make --keep-going --print-directory
+make: Entering directory 'c:/Projects/DosingPumpController'
+g++    -c -o main.o main.cpp
+g++    -c -o Preset.o Preset.cpp
+g++    -c -o PresetLoader.o PresetLoader.cpp
+g++    -c -o Pump.o Pump.cpp
+g++    -c -o PumpController.o PumpController.cpp
+make: Leaving directory 'c:/Projects/DosingPumpController'
+ 
+make: *** No rule to make target 'CalibrationResult.o', needed by 'all'.
+ 
