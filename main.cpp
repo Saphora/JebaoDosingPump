@@ -16,22 +16,7 @@ void printLine(std::string txt, bool doubleEnd=false) {
 }
 void setup() {
 
-	Pump p1(1, "Demo 1", 1);
-	controller.addPump(p1);
-	Pump p2(2, "Demo 2", 2);
-	controller.addPump(p2);
-	Pump p3(3, "Demo 3", 4);
-	controller.addPump(p3);
-	Pump p4(4, "Demo 4", 8);
-	controller.addPump(p4);
-	Pump p5(5, "Demo 5", 16);
-	controller.addPump(p5);
-	Pump p6(6, "Demo 6", 32);
-	controller.addPump(p6);
-	Pump p7(7, "Demo 7", 64);
-	controller.addPump(p7);
-	Pump p8(8, "Demo 8", 128);
-	controller.addPump(p8);
+
 	controller.setup();
 
 }

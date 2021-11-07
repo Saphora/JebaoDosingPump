@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <future>
 #include <fstream>
+#include <sstream>
 
 
 Pump PumpController::findPumpByPumpNr(int nr) {
@@ -29,23 +30,23 @@ void PumpController::Kill() {
 bool PumpController::IsAlive() {
 	return this->alive;
 }
-
 bool PumpController::DumpSnapShot() {
-	try {
-		std::string pumpCsv = "name|calibrated|timetodose100ml|pumpNr\n";
-		std::string presetCsv = "name|ml|pumpNr|description\n";
+
+	
+		std::string pumpCsv = "name|calibrated|timetodose100ml|pumpNr|dataFrame\n";
+		std::string presetCsv = "name|description|ml|pumpNr\n";
 		int index =0;
 		for(index = 0; index < this->pumps.size(); index++) {
 			Pump p = this->pumps[index];
 			if(p.name != "__UNDEFINED__") {
-				pumpCsv = pumpCsv + p.name + "|" + (p.calibrated == true ? "y" : "n")+ "|"+ std::to_string(p.timeToDose100Ml) + "|" + std::to_string(p.pumpNr) + std::string("\n");
+				pumpCsv = pumpCsv + p.name + "|" + (p.calibrated == true ? "y" : "n")+ "|"+ std::to_string(p.timeToDose100Ml) + "|" + std::to_string(p.pumpNr) + "|" + std::to_string(p.dataFrame) + "|" +std::string("\n");
 			}
 		}
 		index =0;
-		for(index = 0; index < this->presets.capacity(); index++) {
+		for(index = 0; index < this->presets.size(); index++) {
 			Preset p = this->presets[index];
 			if(p.name != "__UNDEFINED__") {
-				presetCsv = presetCsv + p.name + "|" + std::to_string(p.ml) + "|"+ std::to_string(p.pumpNr) + "|" + p.description + std::string("\n");
+				presetCsv = presetCsv + p.name + "|"+ p.description+"|" + std::to_string(p.ml) + "|"+ std::to_string(p.pumpNr)+"|" + std::string("\n");
 			}
 		}
 		std::ofstream out("pumps.csv");
@@ -56,13 +57,74 @@ bool PumpController::DumpSnapShot() {
 		out2 << presetCsv;
 		out2.close();
 		return true;
-	} catch(...) {
-		return false;
+	
+	
+}
+
+std::vector<std::string> split(std::string s, std::string delimiter) { 
+	std::vector<std::string> result;
+	size_t pos = 0;
+	std::string token;
+	while ((pos = s.find(delimiter)) != std::string::npos) {
+		token = s.substr(0, pos);
+		result.push_back(token);
+		s.erase(0, pos + delimiter.length());
 	}
+	return result;
 }
 
 bool PumpController::ParseSnapShot() {
-	return false;
+
+		std::ifstream csv("pumps.csv");
+		std::stringstream stringStream;
+		stringStream << csv.rdbuf();
+		
+		std::ifstream csvPresets("presets.csv");
+		std::stringstream stringStreamPresets;
+		stringStreamPresets << csvPresets.rdbuf();
+
+		std::vector<std::string> csvPumpLines = split(stringStream.str(), "\n");
+		std::vector<std::string> csvPresetLines = split(stringStreamPresets.str(), "\n");
+		if(csvPresetLines.size() > 0 ) {
+			this->presets.clear();
+		}
+		if(csvPumpLines.size() > 0) {
+			this->pumps.clear();
+		}
+		int Lindex = 0;
+
+		for(std::string line : csvPumpLines) {
+			if(Lindex > 0) {
+				std::vector<std::string> csvPumpColData = split(line, "|");
+				Pump p;
+				p.calibrated = (csvPumpColData[1] == "y" ? true:false);
+				p.dataFrame = atoi(csvPumpColData[4].c_str());
+				p.name = csvPumpColData[0];
+				p.pumpNr = atoi(csvPumpColData[3].c_str());
+				p.timeToDose100Ml = atof(csvPumpColData[2].c_str());
+				this->pumps.push_back(p);
+			}
+			++Lindex;
+		}
+		Lindex = 0;
+		for(std::string line : csvPresetLines) {
+			if(Lindex > 0) {
+				std::vector<std::string> csvData = split(line, "|");
+				Preset p;
+				p.name = csvData[0];
+				p.description = csvData[1];
+				p.ml = atoi(csvData[2].c_str());
+				p.pumpNr = atoi(csvData[3].c_str());
+				this->presets.push_back(p);
+			}
+			++Lindex;
+		}
+		if(csvPumpLines.size() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	
 }
 
 std::vector<Preset> PumpController::GetPresetsForPump() {
@@ -84,7 +146,6 @@ void PumpController::_dosing() {
 	auto end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double, std::milli> elapsed = end-start;
 	std::cout << std::endl << "Dosing started: " << std::endl;
-	*this->isDosing = true;
 	int index = 0;
 	while(elapsed.count() <= timeToDosePreset) {
 		end = std::chrono::high_resolution_clock::now();
@@ -215,9 +276,6 @@ void PumpController::startProcessByCin(std::string processName) {
 	if(processName == "start" || processName == "s") {
 		this->startPumping(0, {});
 	}
-	if(processName == "stop") {
-		this->stopPumping(0, {});
-	}
 	if(processName == "dose"  || processName == "d") {
 		this->startDose(0, {});
 	}
@@ -243,6 +301,56 @@ void PumpController::startProcessByCin(std::string processName) {
 
 void PumpController::setup() {
 	bool calRequired = false;
+	if(this->ParseSnapShot()) {
+		std::cout << "Predefined setup found. Validating.." << std::endl;
+		if(this->pumps.size() > 0) {
+			std::cout << "We have found " << this->pumps.size() << " pumps!" << std::endl;;
+		}
+		if(this->presets.size() > 0) {
+			std::cout << "We have found " << this->presets.size() << " presets!" << std::endl;
+		}
+		std::cout << "Validation completed." << std::endl;
+	} else {
+		std::cout << "No predefined data was found. Please setup pumps in pumps.csv. " << std::endl <<"and make sure that you save those pump with the save instruction." << std::endl;
+		Pump p1(1, "Demo 1", 1);
+		this->addPump(p1);
+		Pump p2(2, "Demo 2", 2);
+		this->addPump(p2);
+		Pump p3(3, "Demo 3", 4);
+		this->addPump(p3);
+		Pump p4(4, "Demo 4", 8);
+		this->addPump(p4);
+		Pump p5(5, "Demo 5", 16);
+		this->addPump(p5);
+		Pump p6(6, "Demo 6", 32);
+		this->addPump(p6);
+		Pump p7(7, "Demo 7", 64);
+		this->addPump(p7);
+		Pump p8(8, "Demo 8", 128);
+		this->addPump(p8);
+
+		Preset presetDefault;
+		presetDefault.ml = 50;
+		presetDefault.description = "This is a default preset.";
+		presetDefault.name = "test preset";
+		presetDefault.pumpNr = 1;
+		this->presets.push_back(presetDefault);
+		
+		Preset presetDefault2;
+		presetDefault2.ml = 75;
+		presetDefault2.description = "This is a default preset.";
+		presetDefault2.name = "test preset 2";
+		presetDefault2.pumpNr = 2;
+		this->presets.push_back(presetDefault2);
+
+		Preset presetDefault3;
+		presetDefault3.ml = 75;
+		presetDefault3.description = "This is a default preset.";
+		presetDefault3.name = "test preset 2";
+		presetDefault3.pumpNr = 2;
+		this->presets.push_back(presetDefault3);
+		this->DumpSnapShot();
+	}
 	std::cout << "Check if calibration is required." << std::endl << std::endl;
 	for(Pump p : this->pumps) {
 		if(p.calibrated == true) {
@@ -294,7 +402,6 @@ void PumpController::ListPresets() {
 	std::cout << "";
 }
 
-
 void PumpController::ListPumps() {
 	std::cout << "--------------------------------------LIST PUMPS--------------------------------------------------" << std::endl;
 	for(Pump pump : this->pumps) {
@@ -305,12 +412,29 @@ void PumpController::ListPumps() {
 	std::cout << "--------------------------------------------------------------------------------------------------" << std::endl;
 }
 
-void PumpController::stopPumping(int argc, char**args) {
-	
+void PumpController::_startPumping() {
+	while(this->isRunning) {
+		using namespace std::chrono_literals;
+		std::this_thread::sleep_for(1ms);
+		std::cout << ">";
+	}
 }
 
 void PumpController::startPumping(int argc, char**args) {
-	
+	if(argc==0) {
+		int pumpNr = this->_fetchPumpNr();
+		std::cout << "Pump [" << this->_selectedPump.name << " running." << std::endl;
+		this->backgroundWorker = new std::thread([this]() {_startPumping();} );
+		auto start = std::chrono::high_resolution_clock::now();
+		std::string runner = "running";
+		this->isRunning = true;
+		while(runner == std::string("running")) {
+			this->backgroundWorker->detach();
+			std::cout << "Hit any key and press enter to stop" << std::endl;
+			std::cin >> runner;
+			this->isRunning = false;
+		}
+	}
 }
 
 /**

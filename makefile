@@ -1,13 +1,13 @@
-OBJS	= main.o CalibrationResult.o Preset.o PresetLoader.o Pump.o PumpController.o
-SOURCE	= main.cpp CalibrationResult.cpp Preset.cpp PresetLoader.cpp Pump.cpp PumpController.cpp
-HEADER	= CalibrationResult.h Preset.h PresetLoader.h Pump.h PumpController.h
-OUT	= dosingpump.exe
+SRC=$(wildcard *.cpp)
+OBJ=$(SRC:%.cpp=%.o)
+HEADER	= Preset.h PresetLoader.h Pump.h PumpController.h
+OUT	= dosingpump
 CC	 = g++
-FLAGS	 = -g -c -Wall
-LFLAGS	 = 
+FLAGS	 = -g -c -Wall  -std=c++11
+LFLAGS	 = -pthread
 
 all: $(OBJS)
-	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
+	$(CC) -g $(OBJ) -o $(OUT) $(LFLAGS)
 
 clean:
-	rm -f $(OBJS) $(OUT)
+	rm -f $(OBJ) $(OUT)

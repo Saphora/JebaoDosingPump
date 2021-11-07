@@ -32,7 +32,7 @@ class PumpController {
 		bool allPompsCalibrated();
 		void showMainMenu(bool showWelcome, bool isHelp);
 		void startProcessByCin(std::string processName);
-		bool isCalibrating;
+
 		bool DumpSnapShot();
 		bool ParseSnapShot();
 		
@@ -48,9 +48,11 @@ class PumpController {
 		std::vector<Preset> presets;
 		void _calibrate();
 		void _dosing();
+		void _startPumping();
 		bool alive;
 		bool _isDosing = false;
-		bool *isDosing = &this->_isDosing;
+		bool isCalibrating = false;
+		bool isRunning = false;
 		std::thread *backgroundWorker;
 		long calibrationCounter;
 		

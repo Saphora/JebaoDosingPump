@@ -1,9 +1,9 @@
-name|calibrated|timetodose100ml|pumpNr
-Demo 1|y|7400.916800|1
-Demo 2|n|0.000000|2
-Demo 3|n|0.000000|3
-Demo 4|n|0.000000|4
-Demo 5|n|0.000000|5
-Demo 6|n|0.000000|6
-Demo 7|n|0.000000|7
-Demo 8|n|0.000000|8
+name|calibrated|timetodose100ml|pumpNr|dataFrame
+Demo 1|y|0.000000|1|1|
+Demo 2|y|0.000000|2|2|
+Demo 3|y|0.000000|3|4|
+Demo 4|y|0.000000|4|8|
+Demo 5|y|0.000000|5|16|
+Demo 6|y|0.000000|6|32|
+Demo 7|y|0.000000|7|64|
+Demo 8|y|0.000000|8|128|

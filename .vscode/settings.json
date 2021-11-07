@@ -1,4 +1,5 @@
 {
+	"files.encoding":"utf8",
 	"files.associations": {
 		"istream": "cpp",
 		"string": "cpp",

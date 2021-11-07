@@ -9,7 +9,9 @@ class Preset {
 		std::string description;
 		Preset() {
 			ml = -1;
-			name = "__UNDEFINED__"; //to recognize..
+			name = "";
+			description = "";
+			pumpNr = 0;
 		}
 };
 #endif
