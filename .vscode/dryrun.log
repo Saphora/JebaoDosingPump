@@ -1,5 +1,13 @@
-make.exe all --dry-run --always-make --keep-going --print-directory
+make.exe all --dry-run --keep-going --print-directory
 make: Entering directory 'c:/Projects/DosingPumpController'
-g++ -g Preset.o PresetLoader.o Pump.o PumpController.o main.o -o dosingpump -pthread
+g++    -c -o Preset.o Preset.cpp
+ 
+g++    -c -o PresetLoader.o PresetLoader.cpp
+ 
+g++    -c -o Pump.o Pump.cpp
+g++    -c -o PumpController.o PumpController.cpp
+ 
+g++    -c -o main.o main.cpp
+g++ -g Preset.o PresetLoader.o Pump.o PumpController.o main.o -o dosingpump -pthread -lwiringPi
 make: Leaving directory 'c:/Projects/DosingPumpController'
  

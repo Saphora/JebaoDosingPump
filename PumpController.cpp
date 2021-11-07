@@ -5,7 +5,70 @@
 #include <future>
 #include <fstream>
 #include <sstream>
+#include <wiringPi.h>
 
+//STCP = Storage Register Clock Input = 
+//SHCP = Shift Register Clock Input
+//DA = Serial data 
+
+//STORAGEKLOK = GRIJS = 24
+//SHIFT IN KLOK = WIT = 22
+//Serial data = paars
+//storage klok is laag wanneer shift klok aan het klokken is.
+//128 = 8
+//64 =  7
+//32 =  6
+//16 =  5
+//8  =  4
+//4  =  3
+//2  =  2
+//1  =  1
+int STORAGE_CLOCK = 29; //CH3
+int SHIFT_CLOCK = 28; //CH2
+int SERIAL_DATA = 27; //CH1
+
+void WritePumpData(std::vector<bool> databyte) {  
+	digitalWrite(STORAGE_CLOCK, false);
+	for(int i = 0; i<8; i++) {
+		//bitbang
+		if(i == 0) {
+			digitalWrite(SHIFT_CLOCK, false);
+			delayMicroseconds(67);
+			digitalWrite(SHIFT_CLOCK, false);
+			delayMicroseconds(67);
+		}
+		digitalWrite(SHIFT_CLOCK, false);
+		delayMicroseconds(67);
+		digitalWrite(SERIAL_DATA, databyte[i]);
+		delayMicroseconds(134);
+		digitalWrite(SHIFT_CLOCK, true);  
+		delayMicroseconds(268);
+	}
+	digitalWrite(STORAGE_CLOCK, true);
+	digitalWrite(SERIAL_DATA, false);
+}
+
+void DisablePumps() {  
+	std::vector<bool> dataByte = {false,false,false,false,false,false,false,false};
+	digitalWrite(STORAGE_CLOCK, false);
+	for(int i = 0; i<8; i++) {
+	//bitbang
+	if(i == 0) {
+		digitalWrite(SHIFT_CLOCK, false);
+		delayMicroseconds(67);
+		digitalWrite(SHIFT_CLOCK, false);
+		delayMicroseconds(67);
+	}
+	digitalWrite(SHIFT_CLOCK, false);
+	delayMicroseconds(67);
+	digitalWrite(SERIAL_DATA, dataByte[i]);
+	delayMicroseconds(134);
+	digitalWrite(SHIFT_CLOCK, true);  
+	delayMicroseconds(268);
+	}
+	digitalWrite(STORAGE_CLOCK, true);
+	digitalWrite(SERIAL_DATA, false);
+}
 
 Pump PumpController::findPumpByPumpNr(int nr) {
 	int index = 0;
@@ -39,7 +102,15 @@ bool PumpController::DumpSnapShot() {
 		for(index = 0; index < this->pumps.size(); index++) {
 			Pump p = this->pumps[index];
 			if(p.name != "__UNDEFINED__") {
-				pumpCsv = pumpCsv + p.name + "|" + (p.calibrated == true ? "y" : "n")+ "|"+ std::to_string(p.timeToDose100Ml) + "|" + std::to_string(p.pumpNr) + "|" + std::to_string(p.dataFrame) + "|" +std::string("\n");
+				std::string df = "";
+				for(bool bit : p.dataFrame) {
+					if(bit == true) {
+						df = df + "1";
+					} else {
+						df = df + "0";
+					}
+				}
+				pumpCsv = pumpCsv + p.name + "|" + (p.calibrated == true ? "y" : "n")+ "|"+ std::to_string(p.timeToDose100Ml) + "|" + std::to_string(p.pumpNr) + "|" + df + "|" +std::string("\n");
 			}
 		}
 		index =0;
@@ -49,12 +120,12 @@ bool PumpController::DumpSnapShot() {
 				presetCsv = presetCsv + p.name + "|"+ p.description+"|" + std::to_string(p.ml) + "|"+ std::to_string(p.pumpNr)+"|" + std::string("\n");
 			}
 		}
-		std::ofstream out("pumps.csv");
-		out << pumpCsv;
+		std::ofstream out("/home/pi/DosingPump/pumps.csv");
+		out << pumpCsv.c_str();
 		out.close();
 
-		std::ofstream out2("presets.csv");
-		out2 << presetCsv;
+		std::ofstream out2("/home/pi/DosingPump/presets.csv");
+		out2 << presetCsv.c_str();
 		out2.close();
 		return true;
 	
@@ -74,14 +145,20 @@ std::vector<std::string> split(std::string s, std::string delimiter) {
 }
 
 bool PumpController::ParseSnapShot() {
-
+	try {
+		std::cout << "Trying to parse snapshot" << std::endl;
 		std::ifstream csv("pumps.csv");
 		std::stringstream stringStream;
 		stringStream << csv.rdbuf();
 		
+		
+		std::cout << "Pumps csv readed." << std::endl;
+
 		std::ifstream csvPresets("presets.csv");
 		std::stringstream stringStreamPresets;
 		stringStreamPresets << csvPresets.rdbuf();
+		
+		std::cout << "Presets csv readed." << std::endl;
 
 		std::vector<std::string> csvPumpLines = split(stringStream.str(), "\n");
 		std::vector<std::string> csvPresetLines = split(stringStreamPresets.str(), "\n");
@@ -93,12 +170,23 @@ bool PumpController::ParseSnapShot() {
 		}
 		int Lindex = 0;
 
+		std::cout << "Parsing lines for pumps.csv" << std::endl;
 		for(std::string line : csvPumpLines) {
 			if(Lindex > 0) {
 				std::vector<std::string> csvPumpColData = split(line, "|");
 				Pump p;
 				p.calibrated = (csvPumpColData[1] == "y" ? true:false);
-				p.dataFrame = atoi(csvPumpColData[4].c_str());
+				std::vector<bool> df;
+				int index = 0;
+				for(char bit : csvPumpColData[4]) {
+					if(bit == '1') {
+						df.push_back(true);
+					} else {
+						df.push_back(false);
+					}
+					++index;
+				}
+				p.dataFrame = df;
 				p.name = csvPumpColData[0];
 				p.pumpNr = atoi(csvPumpColData[3].c_str());
 				p.timeToDose100Ml = atof(csvPumpColData[2].c_str());
@@ -107,6 +195,9 @@ bool PumpController::ParseSnapShot() {
 			++Lindex;
 		}
 		Lindex = 0;
+
+		
+		std::cout << "Parsing lines for presets csv" << std::endl;
 		for(std::string line : csvPresetLines) {
 			if(Lindex > 0) {
 				std::vector<std::string> csvData = split(line, "|");
@@ -124,7 +215,10 @@ bool PumpController::ParseSnapShot() {
 		} else {
 			return false;
 		}
-	
+	} catch(...) {
+		std::cout << "EXCEPTION CAUGHT!" <<std::endl;
+		throw "There was an error reading the csv files.";
+	}
 }
 
 std::vector<Preset> PumpController::GetPresetsForPump() {
@@ -148,11 +242,13 @@ void PumpController::_dosing() {
 	std::cout << std::endl << "Dosing started: " << std::endl;
 	int index = 0;
 	while(elapsed.count() <= timeToDosePreset) {
+		WritePumpData(this->_selectedPump.dataFrame);
 		end = std::chrono::high_resolution_clock::now();
 		elapsed = end-start;
 		using namespace std::chrono_literals;
 		std::this_thread::sleep_for(1ms);
 		std::cout << ">";
+
 	}
 
 	std::cout << std::endl << "Dosing completed!" << std::endl;
@@ -173,6 +269,7 @@ void PumpController::startDose(int argc, char** args) {
 		if(yn == "y" || yn == "yes") {
 			int ml = 0;
 			this->backgroundWorker->join();
+			DisablePumps();
 		}
 		std::cout << "DosingPump>" << std::endl;
 	}
@@ -181,6 +278,7 @@ void PumpController::startDose(int argc, char** args) {
 
 void PumpController::_calibrate() {
 	while(this->isCalibrating) {
+		WritePumpData(this->_selectedPump.dataFrame);
 		using namespace std::chrono_literals;
 		std::this_thread::sleep_for(1ms);
 		std::cout << "=";
@@ -208,6 +306,7 @@ void PumpController::calibrate(int argc, char **args) {
 				std::cin >> runner;
 			}
 			this->isCalibrating = false;
+			DisablePumps();
 			auto end = std::chrono::high_resolution_clock::now();	
 			std::chrono::duration<double, std::milli> elapsed = end-start;
 			std::cout << std::endl << "Calibration completed. It takes " << elapsed.count() << " milliseconds to dose 100ml" << std::endl;
@@ -248,7 +347,7 @@ void PumpController::showMainMenu(bool showWelcome, bool isHelp) {
 		if(showWelcome == true) {
 			if(isHelp == false) {
 				std::cout << "Welcome to the interactive mode. Please enter a instruction to start" << std::endl;
-				std::cout << "The following instructions are available now:" << std::endl << std::endl;
+				std::cout << "The folfalseing instructions are available now:" << std::endl << std::endl;
 			}
 			std::cout << "s/start - only when pump is stopped." << std::endl;
 			std::cout << "s/stop - only when pump is started." << std::endl;
@@ -300,8 +399,16 @@ void PumpController::startProcessByCin(std::string processName) {
 }
 
 void PumpController::setup() {
+	pinMode(STORAGE_CLOCK, OUTPUT);
+	pinMode(SHIFT_CLOCK, OUTPUT);  
+	pinMode(SERIAL_DATA, OUTPUT);
+	digitalWrite(SERIAL_DATA, false); // do this first
+	digitalWrite(SHIFT_CLOCK, true); // do this first
+	digitalWrite(STORAGE_CLOCK, true); // do this first
+	delay(2);
+	std::cout << "Setup started." << std::endl;
 	bool calRequired = false;
-	if(this->ParseSnapShot()) {
+	if(this->ParseSnapShot()==true) {
 		std::cout << "Predefined setup found. Validating.." << std::endl;
 		if(this->pumps.size() > 0) {
 			std::cout << "We have found " << this->pumps.size() << " pumps!" << std::endl;;
@@ -312,21 +419,21 @@ void PumpController::setup() {
 		std::cout << "Validation completed." << std::endl;
 	} else {
 		std::cout << "No predefined data was found. Please setup pumps in pumps.csv. " << std::endl <<"and make sure that you save those pump with the save instruction." << std::endl;
-		Pump p1(1, "Demo 1", 1);
+		Pump p1(1, "Demo 1", {false,false,false,false,false,false,false,true});
 		this->addPump(p1);
-		Pump p2(2, "Demo 2", 2);
+		Pump p2(2, "Demo 2", {false,false,false,false,false,false,true,false});
 		this->addPump(p2);
-		Pump p3(3, "Demo 3", 4);
+		Pump p3(3, "Demo 3", {false,false,false,false,false,true,false,false});
 		this->addPump(p3);
-		Pump p4(4, "Demo 4", 8);
+		Pump p4(4, "Demo 4", {false,false,false,false,true,false,false,false});
 		this->addPump(p4);
-		Pump p5(5, "Demo 5", 16);
+		Pump p5(5, "Demo 5", {false,false,false,true,false,false,false,false});
 		this->addPump(p5);
-		Pump p6(6, "Demo 6", 32);
+		Pump p6(6, "Demo 6", {false,false,true,false,false,false,false,false});
 		this->addPump(p6);
-		Pump p7(7, "Demo 7", 64);
+		Pump p7(7, "Demo 7", {false,true,false,false,false,false,false,false});
 		this->addPump(p7);
-		Pump p8(8, "Demo 8", 128);
+		Pump p8(8, "Demo 8", {true,false,false,false,false,false,false,false});
 		this->addPump(p8);
 
 		Preset presetDefault;
@@ -414,6 +521,7 @@ void PumpController::ListPumps() {
 
 void PumpController::_startPumping() {
 	while(this->isRunning) {
+		WritePumpData(this->_selectedPump.dataFrame);
 		using namespace std::chrono_literals;
 		std::this_thread::sleep_for(1ms);
 		std::cout << ">";
@@ -432,6 +540,7 @@ void PumpController::startPumping(int argc, char**args) {
 			this->backgroundWorker->detach();
 			std::cout << "Hit any key and press enter to stop" << std::endl;
 			std::cin >> runner;
+			DisablePumps();
 			this->isRunning = false;
 		}
 	}

@@ -10,16 +10,17 @@ class Pump {
 		Preset *selectedPresetToDose; //dosing for preset.
 		int pumpNr;
 		double timeToDose100Ml;
-		int dataFrame; //data to be sended to pump
+		std::vector<bool> dataFrame; //data to be sended to pump
 		bool calibrated;
 		bool isRunning;
 		std::string name;
 		int lengthOfPresets = 0; //this should be private, keeps track of the nr of presets in list.
 
-		Pump(int p_pumpNr, std::string pname, int pdataFrame) {
+		Pump(int p_pumpNr, std::string pname, std::vector<bool> pdataFrame) {
 			this->pumpNr = p_pumpNr;
 			this->name = pname;
 			this->calibrated = false;
+			this->timeToDose100Ml = 0.0;
 			this->dataFrame = pdataFrame;
 		}
 
@@ -27,7 +28,8 @@ class Pump {
 			this->pumpNr = -1;
 			this->calibrated = false;
 			this->name = "__UNDEFINED__";
-			this->dataFrame = -1;
+			this->timeToDose100Ml = 0.0;
+			this->dataFrame = {false,false,false,false,false,false,false,false};
 		}
 	private:
 };

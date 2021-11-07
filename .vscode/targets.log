@@ -1,13 +1,14 @@
 make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'Preset.o', needed by 'all'.  Stop.
+ 
 # GNU Make 4.3
 # Built for Windows32
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sun Nov 07 11:28:59 2021
+# Make data base, printed on Sun Nov 07 22:06:38 2021
 
 # Variables
 
@@ -103,8 +104,8 @@ VSCODE_VERBOSE_LOGGING = true
 VSCODE_PID = 21116
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
-# makefile (from 'Makefile', line 6)
-FLAGS = -g -c -Wall  -std=c++11
+# makefile (from 'Makefile', line 7)
+FLAGS = -g -c -Wall  -std=c++17
 # automatic
 *F = $(notdir $*)
 # automatic
@@ -115,6 +116,8 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 ONEDRIVECONSUMER = C:\Users\Wesley van der Meer\OneDrive
 # default
 MAKE_HOST := Windows32
+# makefile (from 'Makefile', line 3)
+OBJS = Preset.o PresetLoader.o Pump.o PumpController.o main.o
 # environment
 PROGRAMDATA = C:\ProgramData
 # default
@@ -143,7 +146,7 @@ COMPUTERNAME = DESKTOP-S86AJHH
 MAKEFILES := 
 # automatic
 ^F = $(notdir $^)
-# makefile (from 'Makefile', line 3)
+# makefile (from 'Makefile', line 4)
 HEADER = Preset.h PresetLoader.h Pump.h PumpController.h
 # environment
 PROMPT = $P$G
@@ -207,7 +210,7 @@ VSCODE_IPC_HOOK = \\.\pipe\0403078751ae402688f6e08174c644c1-1.62.0-main-sock
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
-# makefile (from 'Makefile', line 4)
+# makefile (from 'Makefile', line 5)
 OUT = dosingpump
 # default
 SUFFIXES := 
@@ -219,14 +222,14 @@ SESSIONNAME = Console
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
 PROCESSOR_REVISION = a502
-# makefile (from 'Makefile', line 5)
+# makefile (from 'Makefile', line 6)
 CC = g++
-# makefile (from 'Makefile', line 7)
-LFLAGS = -pthread
+# makefile (from 'Makefile', line 8)
+LFLAGS = -pthread -lwiringPi
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 # variable set hash-table stats:
-# Load=107/1024=10%, Rehash=0, Collisions=13/143=9%
+# Load=108/1024=11%, Rehash=0, Collisions=13/136=10%
 
 # Pattern-specific Variable Values
 
@@ -234,9 +237,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 
 # Directories
 
-# . (key c:/Projects/DosingPumpController, mtime 1636276774): 23 files, no impossibilities.
+# . (key c:/Projects/DosingPumpController, mtime 1636318926): 24 files, no impossibilities.
 
-# 23 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -245,9 +248,33 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 # Files
 
 # Not a target:
+PresetLoader.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Preset.o:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+Pump.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+PumpController.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-11-07 10:02:19
+#  Last modified 2021-11-07 22:06:10
 #  File has been updated.
 #  Successfully updated.
 
@@ -255,7 +282,7 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 13):
+#  recipe to execute (from 'Makefile', line 14):
 	rm -f $(OBJ) $(OUT)
 
 # Not a target:
@@ -264,54 +291,34 @@ clean:
 #  Modification time never checked.
 #  File has not been updated.
 
-all:
+all: Preset.o PresetLoader.o Pump.o PumpController.o main.o
 #  Command line target.
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
 #  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := all
-# automatic
-# * := 
-# automatic
-# < := 
-# automatic
-# + := 
-# automatic
-# % := 
-# automatic
-# ^ := 
-# automatic
-# ? := 
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=2/16=12%
-#  recipe to execute (from 'Makefile', line 10):
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 11):
 	$(CC) -g $(OBJ) -o $(OUT) $(LFLAGS)
 
 # Not a target:
-.SUFFIXES:
+main.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=5/1024=0%, Rehash=0, Collisions=0/17=0%
+# Load=10/1024=1%, Rehash=0, Collisions=0/26=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 27 / storage = 257 B / avg = 9 B
-# current buf: size = 8174 B / used = 257 B / count = 27 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 319 B / avg = 9 B
+# current buf: size = 8174 B / used = 319 B / count = 33 / avg = 9 B
 
-# strcache performance: lookups = 35 / hit rate = 22%
+# strcache performance: lookups = 40 / hit rate = 17%
 # hash-table stats:
-# Load=27/8192=0%, Rehash=0, Collisions=0/35=0%
-# Finished Make data base on Sun Nov 07 11:28:59 2021
+# Load=33/8192=0%, Rehash=0, Collisions=0/40=0%
+# Finished Make data base on Sun Nov 07 22:06:38 2021
 
  
