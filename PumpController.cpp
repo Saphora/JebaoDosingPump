@@ -233,25 +233,35 @@ std::vector<Preset> PumpController::GetPresetsForPump() {
 }
 
 void PumpController::_dosing() {
+	int ml = this->GetPresetsForPump()[0].ml;
 	double timeToDose1ml = this->_selectedPump.timeToDose100Ml / 100;
-	double timeToDosePreset = timeToDose1ml * this->GetPresetsForPump()[0].ml;
+	double timeToDosePreset = timeToDose1ml * ml;
+
+	std::cout << std::endl << std::endl << "Dosing started: " << std::endl;
+	std::cout << "Time to dose 100ml: " << this->_selectedPump.timeToDose100Ml << std::endl;
+	std::cout << "Pump: " << this->_selectedPump.name << std::endl;
+	std::cout << "Time to dose preset: " << timeToDosePreset << std::endl;
+	std::cout << "Ammount dosing (ml): " << ml << std::endl;
 	auto start = std::chrono::high_resolution_clock::now();
 	using namespace std::chrono_literals;
 	std::this_thread::sleep_for(100us);
 	auto end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double, std::milli> elapsed = end-start;
-	std::cout << std::endl << "Dosing started: " << std::endl;
+	std::cout << "Initial elapsed time: " << elapsed.count() << std::endl << std::endl;
 	int index = 0;
+	assert(elapsed.count() <= timeToDosePreset);
 	while(elapsed.count() <= timeToDosePreset) {
 		WritePumpData(this->_selectedPump.dataFrame);
 		end = std::chrono::high_resolution_clock::now();
 		elapsed = end-start;
+		
 		using namespace std::chrono_literals;
-		std::this_thread::sleep_for(1ms);
 		std::cout << ">";
+		//std::cout << timeToDosePreset << std::endl;
+		//std::cout << elapsed.count() << std::endl << std::endl;
 	}
 	
-	DisablePumps("[_dosing] - Disable pumps called from inside the thread.");
+	//DisablePumps("[_dosing] - Disable pumps called from inside the thread.");
 	std::cout << std::endl << "Dosing completed!" << std::endl;
 }
 void PumpController::startDose(int argc, char** args) {
@@ -268,7 +278,6 @@ void PumpController::startDose(int argc, char** args) {
 		std::string yn = this->_fetchYesNo();
 		this->backgroundWorker = new std::thread([this]() {_dosing();} );
 		if(yn == "y" || yn == "yes") {
-			int ml = 0;
 			this->backgroundWorker->join();
 			DisablePumps("[startDose] - Disable pumps called from outside the thread.");
 		}
@@ -281,7 +290,6 @@ void PumpController::_calibrate() {
 	while(this->isCalibrating) {
 		WritePumpData(this->_selectedPump.dataFrame);
 		using namespace std::chrono_literals;
-		std::this_thread::sleep_for(1ms);
 		std::cout << "=";
 	}
 	DisablePumps("[_calibrate] - Disable pumps called from inside the thread.");
