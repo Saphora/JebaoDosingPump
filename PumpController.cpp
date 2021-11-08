@@ -48,7 +48,8 @@ void WritePumpData(std::vector<bool> databyte) {
 	digitalWrite(SERIAL_DATA, false);
 }
 
-void DisablePumps() {  
+void DisablePumps(std::string whereCalled) {  
+	std::cout << whereCalled << std::endl;
 	std::vector<bool> dataByte = {false,false,false,false,false,false,false,false};
 	digitalWrite(STORAGE_CLOCK, false);
 	for(int i = 0; i<8; i++) {
@@ -248,9 +249,9 @@ void PumpController::_dosing() {
 		using namespace std::chrono_literals;
 		std::this_thread::sleep_for(1ms);
 		std::cout << ">";
-
 	}
-
+	
+	DisablePumps("[_dosing] - Disable pumps called from inside the thread.");
 	std::cout << std::endl << "Dosing completed!" << std::endl;
 }
 void PumpController::startDose(int argc, char** args) {
@@ -269,7 +270,7 @@ void PumpController::startDose(int argc, char** args) {
 		if(yn == "y" || yn == "yes") {
 			int ml = 0;
 			this->backgroundWorker->join();
-			DisablePumps();
+			DisablePumps("[startDose] - Disable pumps called from outside the thread.");
 		}
 		std::cout << "DosingPump>" << std::endl;
 	}
@@ -283,6 +284,7 @@ void PumpController::_calibrate() {
 		std::this_thread::sleep_for(1ms);
 		std::cout << "=";
 	}
+	DisablePumps("[_calibrate] - Disable pumps called from inside the thread.");
 }
 void PumpController::calibrate(int argc, char **args) {
 	if(argc == 0) {
@@ -306,7 +308,6 @@ void PumpController::calibrate(int argc, char **args) {
 				std::cin >> runner;
 			}
 			this->isCalibrating = false;
-			DisablePumps();
 			auto end = std::chrono::high_resolution_clock::now();	
 			std::chrono::duration<double, std::milli> elapsed = end-start;
 			std::cout << std::endl << "Calibration completed. It takes " << elapsed.count() << " milliseconds to dose 100ml" << std::endl;
@@ -390,12 +391,18 @@ void PumpController::startProcessByCin(std::string processName) {
 	if(processName == "list-pumps"  || processName == "lp") {
 		this->ListPumps();
 	}
+	if(processName == "exit"  || processName == "e") {
+		std::terminate();
+	} else {
+		this->showMainMenu(false, false);
+	}
+	if(processName == "kill") {
+		DisablePumps("[KILL] - Disable pumps from kill command.");
+	}
 	if(processName == "?" || processName == "help") {
 		this->showMainMenu(true, true);
 	}
-	if(processName != "exit"  || processName == "e") {
-		this->showMainMenu(false, false);
-	}
+
 }
 
 void PumpController::setup() {
@@ -540,7 +547,8 @@ void PumpController::startPumping(int argc, char**args) {
 			this->backgroundWorker->detach();
 			std::cout << "Hit any key and press enter to stop" << std::endl;
 			std::cin >> runner;
-			DisablePumps();
+			
+			DisablePumps("[startPumping] - Disable pumps called from outside the thread.");
 			this->isRunning = false;
 		}
 	}

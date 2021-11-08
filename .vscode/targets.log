@@ -1,5 +1,5 @@
 make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'Preset.o', needed by 'all'.  Stop.
+make: *** No rule to make target 'PumpController.o', needed by 'all'.  Stop.
  
 # GNU Make 4.3
 # Built for Windows32
@@ -8,7 +8,7 @@ make: *** No rule to make target 'Preset.o', needed by 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Nov 07 22:06:38 2021
+# Make data base, printed on Mon Nov 08 09:30:56 2021
 
 # Variables
 
@@ -16,20 +16,20 @@ make: *** No rule to make target 'Preset.o', needed by 'all'.  Stop.
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
-# makefile (from 'Makefile', line 2)
+# makefile (from 'makefile', line 2)
 OBJ = $(SRC:%.cpp=%.o)
 # environment
 LC_ALL = C
-# makefile (from 'Makefile', line 1)
+# makefile (from 'makefile', line 1)
 SRC = $(wildcard *.cpp)
 # environment
 USERPROFILE = C:\Users\Wesley van der Meer
 # environment
 LOCALAPPDATA = C:\Users\Wesley van der Meer\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-4a74133d-52ad-4583-b816-27023cc1030f-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e44b1353-ebc6-44ad-9fb9-c24db00823cf-sock
 # environment
-VSCODE_CWD = C:\Users\Wesley van der Meer\AppData\Local\Programs\Microsoft VS Code
+VSCODE_CWD = C:\Projects\DosingPump
 # environment
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
@@ -77,7 +77,7 @@ MAKEFLAGS = pqrR
 # environment
 ONEDRIVE = C:\Users\Wesley van der Meer\Warmteinfra
 # makefile
-CURDIR := c:/Projects/DosingPumpController
+CURDIR := c:/Projects/DosingPump/JebaoDosingPump
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -94,8 +94,8 @@ MFLAGS = -pqrR
 COMMONPROGRAMW6432 = C:\Program Files\Common Files
 # automatic
 +D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
-# makefile (from 'Makefile', line 1)
-MAKEFILE_LIST := Makefile
+# makefile (from 'makefile', line 1)
+MAKEFILE_LIST := makefile
 # automatic
 @F = $(notdir $@)
 # environment
@@ -104,7 +104,7 @@ VSCODE_VERBOSE_LOGGING = true
 VSCODE_PID = 21116
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
-# makefile (from 'Makefile', line 7)
+# makefile (from 'makefile', line 7)
 FLAGS = -g -c -Wall  -std=c++17
 # automatic
 *F = $(notdir $*)
@@ -116,7 +116,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 ONEDRIVECONSUMER = C:\Users\Wesley van der Meer\OneDrive
 # default
 MAKE_HOST := Windows32
-# makefile (from 'Makefile', line 3)
+# makefile (from 'makefile', line 3)
 OBJS = Preset.o PresetLoader.o Pump.o PumpController.o main.o
 # environment
 PROGRAMDATA = C:\ProgramData
@@ -146,7 +146,7 @@ COMPUTERNAME = DESKTOP-S86AJHH
 MAKEFILES := 
 # automatic
 ^F = $(notdir $^)
-# makefile (from 'Makefile', line 4)
+# makefile (from 'makefile', line 4)
 HEADER = Preset.h PresetLoader.h Pump.h PumpController.h
 # environment
 PROMPT = $P$G
@@ -210,7 +210,7 @@ VSCODE_IPC_HOOK = \\.\pipe\0403078751ae402688f6e08174c644c1-1.62.0-main-sock
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
-# makefile (from 'Makefile', line 5)
+# makefile (from 'makefile', line 5)
 OUT = dosingpump
 # default
 SUFFIXES := 
@@ -222,9 +222,9 @@ SESSIONNAME = Console
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
 PROCESSOR_REVISION = a502
-# makefile (from 'Makefile', line 6)
+# makefile (from 'makefile', line 6)
 CC = g++
-# makefile (from 'Makefile', line 8)
+# makefile (from 'makefile', line 8)
 LFLAGS = -pthread -lwiringPi
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
@@ -237,9 +237,10 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 
 # Directories
 
-# . (key c:/Projects/DosingPumpController, mtime 1636318926): 24 files, no impossibilities.
+# . (key c:/Projects/DosingPump/JebaoDosingPump, mtime 1636360232): 25 files, no impossibilities.
 
-# 24 files, no impossibilities in 1 directories.
+#  
+25 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -249,40 +250,36 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 
 # Not a target:
 PresetLoader.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit rule search has been done.
+#  Last modified 2021-11-08 09:30:32
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 Preset.o:
 #  Implicit rule search has been done.
-#  File does not exist.
-#  File has not been updated.
+#  Last modified 2021-11-08 09:30:32
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 Pump.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit rule search has been done.
+#  Last modified 2021-11-08 09:30:32
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 PumpController.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2021-11-07 22:06:10
-#  File has been updated.
-#  Successfully updated.
+#  File does not exist.
+#  File has not been updated.
 
 clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 14):
+#  recipe to execute (from 'makefile', line 14):
 	rm -f $(OBJ) $(OUT)
 
 # Not a target:
@@ -296,7 +293,7 @@ all: Preset.o PresetLoader.o Pump.o PumpController.o main.o
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 11):
+#  recipe to execute (from 'makefile', line 11):
 	$(CC) -g $(OBJ) -o $(OUT) $(LFLAGS)
 
 # Not a target:
@@ -304,6 +301,13 @@ main.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  Last modified 2021-11-08 09:30:32
+#  File has been updated.
+#  Successfully updated.
 
 # files hash-table stats:
 # Load=10/1024=1%, Rehash=0, Collisions=0/26=0%
@@ -313,12 +317,12 @@ main.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 319 B / avg = 9 B
-# current buf: size = 8174 B / used = 319 B / count = 33 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 308 B / avg = 9 B
+# current buf: size = 8174 B / used = 308 B / count = 31 / avg = 9 B
 
-# strcache performance: lookups = 40 / hit rate = 17%
+# strcache performance: lookups = 41 / hit rate = 24%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=0/40=0%
-# Finished Make data base on Sun Nov 07 22:06:38 2021
+# Load=31/8192=0%, Rehash=0, Collisions=0/41=0%
+# Finished Make data base on Mon Nov 08 09:30:56 2021
 
  

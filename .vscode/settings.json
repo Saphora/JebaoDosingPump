@@ -55,7 +55,8 @@
 		"condition_variable": "cpp",
 		"future": "cpp",
 		"mutex": "cpp",
-		"fstream": "cpp"
+		"fstream": "cpp",
+		"sstream": "cpp"
 	},
 	"makefile.launchConfigurations": [
 		{
