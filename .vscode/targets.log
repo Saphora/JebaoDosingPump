@@ -8,7 +8,7 @@ make: *** No rule to make target 'PumpController.o', needed by 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Nov 08 09:30:56 2021
+# Make data base, printed on Sat Nov 13 11:48:36 2021
 
 # Variables
 
@@ -27,9 +27,9 @@ USERPROFILE = C:\Users\Wesley van der Meer
 # environment
 LOCALAPPDATA = C:\Users\Wesley van der Meer\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-e44b1353-ebc6-44ad-9fb9-c24db00823cf-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-0b9332c9-3b29-4f3b-9b60-62ee8eb13c52-sock
 # environment
-VSCODE_CWD = C:\Projects\DosingPump
+VSCODE_CWD = C:\Users\Wesley van der Meer\AppData\Local\Programs\Microsoft VS Code
 # environment
 CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
@@ -43,7 +43,7 @@ MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_21116_ZMNEHCQOVBNBBTQF
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_3572_OJZJIHKQBBFQGEUF
 # environment
 ONEDRIVECOMMERCIAL = C:\Users\Wesley van der Meer\Warmteinfra
 # environment
@@ -61,7 +61,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\Wesley van der Meer\AppData\Roaming\Code\CachedData\b3318bc0524af3d74034b8bb8a64df0ccf35549a
+VSCODE_CODE_CACHE_PATH = C:\Users\Wesley van der Meer\AppData\Roaming\Code\CachedData\f4af3cbf5a99787542e2a30fe1fd37cd644cc31f
 # environment
 LANG = C
 # default
@@ -101,7 +101,7 @@ MAKEFILE_LIST := makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 21116
+VSCODE_PID = 3572
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # makefile (from 'makefile', line 7)
@@ -205,7 +205,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = C:\Users\WESLEY~1\AppData\Local\Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\0403078751ae402688f6e08174c644c1-1.62.0-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\0403078751ae402688f6e08174c644c1-1.62.1-main-sock
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -237,10 +237,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 165 Stepping 2, GenuineIntel
 
 # Directories
 
-# . (key c:/Projects/DosingPump/JebaoDosingPump, mtime 1636360232): 25 files, no impossibilities.
+# . (key c:/Projects/DosingPump/JebaoDosingPump, mtime 1636558896): 24 files, no impossibilities.
 
-#  
-25 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -317,12 +316,12 @@ makefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 308 B / avg = 9 B
-# current buf: size = 8174 B / used = 308 B / count = 31 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 30 / storage = 296 B / avg = 9 B
+# current buf: size = 8174 B / used = 296 B / count = 30 / avg = 9 B
 
-# strcache performance: lookups = 41 / hit rate = 24%
+# strcache performance: lookups = 40 / hit rate = 25%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=0/41=0%
-# Finished Make data base on Mon Nov 08 09:30:56 2021
+# Load=30/8192=0%, Rehash=0, Collisions=0/40=0%
+# Finished Make data base on Sat Nov 13 11:48:36 2021
 
  
